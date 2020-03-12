@@ -15,8 +15,7 @@ def main(argv):
 	while (True):
 		(clientSocket, addr) = serverSocket.accept()
 		filenameRequest = Lib.readTextTCP(clientSocket)
-		filename = Lib.extractFilename(filenameRequest)
-		fileSize = Lib.check_File_Exists(filename)
+		fileSize = Lib.check_File_Exists(filenameRequest)
 		
 		if fileSize == 0:
 			Lib.writeTextTCP(str(fileSize), clientSocket)
@@ -24,15 +23,15 @@ def main(argv):
 			print('File does not exist')
 		else:
 			Lib.writeTextTCP(str(fileSize), clientSocket)
-			sendFile(filename, fileSize, clientSocket)
+			sendFile(filenameRequest, fileSize, clientSocket)
 			clientSocket.close()
 			print('Sent filesize to client')
 
 	serverSocket.close()
 
 
-def sendFile(fileName,  fileSize,  conn):
-	file =  open(fileName, "rb")
+def sendFile(filenameRequest,  fileSize,  conn):
+	file =  open(filenameRequest, "rb")
 	
 	sentBytes = 0
 	while sentBytes < fileSize:
